@@ -1,0 +1,22 @@
+body {
+    background-color: #252525;
+}
+
+.speed {
+    position: absolute;
+    color: grey;
+    z-index: 1;
+}
+
+.display {
+    position: absolute;
+    color: #cccccc;
+    font-size: 20px;
+    z-index: 1;
+}
+
+.btn1 {
+    position: absolute;
+    top: 20px;
+    left: 300px;
+}
