@@ -18,7 +18,11 @@ var planetsize = 30,
     startY = 2,
     thrust = 0.01,
     simspeed = 1000 / 60,
-    zoom = 1;
+    zoom = 1,
+    lineColor = 0x66bbff,
+    retroColor = 0xff4444,
+    proColor = 0x44ff44,
+    fuel = 10;
 
 
 function changeOffset(key, setting) {
@@ -162,6 +166,16 @@ $(document).ready(function() {
             second.speedy += thrust;
         }
 
+        // trail
+        if(counter % 2 === 0) {
+            trail.lineStyle(2, lineColor, 0.2);
+        }
+        else {
+            trail.lineStyle(2, lineColor, 0.1);
+        }
+
+
+
         // Orbital "Dynamics"
         var diffX = circle.x - second.x;
         var diffY = circle.y - second.y;
@@ -192,23 +206,27 @@ $(document).ready(function() {
 
         // prograde/retrograde
 
-        if(grade[0]) {
-            second.speedx += Math.sin(velAnglex) * thrust;
-            second.speedy += Math.sin(velAngley) * thrust;
-        }
-        if(grade[1]) {
-            second.speedx -= Math.sin(velAnglex) * thrust;
-            second.speedy -= Math.sin(velAngley) * thrust;
+        if(fuel >= 0) {
+            if(grade[0]) {
+                second.speedx += Math.sin(velAnglex) * thrust;
+                second.speedy += Math.sin(velAngley) * thrust;
+                fuel -= thrust;
+            }
+            if(grade[1]) {
+                second.speedx -= Math.sin(velAnglex) * thrust;
+                second.speedy -= Math.sin(velAngley) * thrust;
+                fuel -= thrust;
+            }
+
+            if(grade[0]) {
+                trail.lineStyle(2, proColor, 0.4);
+            }
+            else if(grade[1]) {
+                trail.lineStyle(2, retroColor, 0.4);
+            }
         }
 
-        $(".display").html("speed: " + speed);
-        // trail
-        if(counter % 2 === 0) {
-            trail.lineStyle(2, 0x66bbff, 0.2);
-        }
-        else {
-            trail.lineStyle(2, 0x66bbff, 0.1);
-        }
+        $(".display").html("speed: " + speed + "<br> Fuel:" + Math.round(fuel*10));
 
         // draw trail
         trail.moveTo(second.x,second.y);
