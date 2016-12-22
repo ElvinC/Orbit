@@ -20,4 +20,51 @@ body {
     position: absolute;
     top: 20px;
     left: 300px;
+    z-index: 51;
+}
+
+
+#prograde {
+    text-align: center;
+    padding-top: 100px;
+    font-size: 30px;
+    color: #eee;
+    position: absolute;
+    width: 50%;
+    left: 0;
+    height: 100vh;
+    z-index: 50;
+    background-color: rgba(100, 200, 100, 0.3);
+    transition:all 1s;
+}
+
+#retrograde {
+    text-align: center;
+    padding-top: 100px;
+    font-size: 30px;
+    color: #eee;
+    position: absolute;
+    width: 50%;
+    right: 0;
+    height: 100vh;
+    z-index: 50;
+    background-color: rgba(200, 100, 100, 0.3);
+    transition:all 1s;
+}
+
+#fuelprogress {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: red;
+    height: 10px;
+    width: 200px;
+    z-index: 50;
+}
+
+#fuelamount {
+    position: relative;
+    width: 20%;
+    height: 10px;
+    background-color: blue;
 }

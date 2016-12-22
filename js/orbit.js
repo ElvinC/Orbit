@@ -6,8 +6,12 @@ var renderer;
 var keys = [false, false, false, false];
 
 // keys down prograde(z) retrograde(x)
-var grade = [false, false]
+var grade = [false, false];
 
+var changeThrust = {
+    increase: false,
+    decrease: false
+}
 
 // "settings"
 var planetsize = 30,
@@ -15,37 +19,44 @@ var planetsize = 30,
     gravity = 20,
     follow = true,
     startX = 0,
-    startY = 2,
+    startY = 4,
     thrust = 0.01,
     simspeed = 1000 / 60,
     zoom = 1,
     lineColor = 0x66bbff,
     retroColor = 0xff4444,
     proColor = 0x44ff44,
-    fuel = 10;
+    startFuel = 90,
+    lineWidth = 2,
+    changeAmount = 0.0005;
+
+
+// amount of fuel left
+var fuel = startFuel;
+
 
 
 function changeOffset(key, setting) {
     // A
-    if(key == 65){
-        keys[1] = setting;
+    //if(key == 65){
+    //    keys[1] = setting;
         // offsetx -= 3;
-    }
+    //}
     // D
-    if (key == 68) {
-        keys[3] = setting;
+    //if (key == 68) {
+    //    keys[3] = setting;
         // offsetx += 3;
-    }
+    //}
     // W
-    if (key == 87) {
-        keys[0] = setting;
+    //if (key == 87) {
+    //    keys[0] = setting;
         // offsety -= 3;
-    }
+    //}
     // S
-    if (key == 83) {
-        keys[2] = setting;
+    //if (key == 83) {
+    //    keys[2] = setting;
         // offsety += 3;
-    }
+    //}
     // Z
     if (key == 90) {
         grade[0] = setting;
@@ -55,15 +66,26 @@ function changeOffset(key, setting) {
         grade[1] = setting;
     }
 
+    if (key == 17) {
+        changeThrust.decrease = setting;
+    }
+    if (key == 16) {
+        changeThrust.increase = setting
+    }
+
 }
 
 
 // control
 document.addEventListener('keydown', function(ev) {changeOffset(ev.keyCode, true);  }, false);
 document.addEventListener('keyup', function(ev) {changeOffset(ev.keyCode, false);}, false);
-
 // load after page is done
 $(document).ready(function() {
+    setTimeout(removeOverlay, 2000)
+    document.getElementById('prograde').addEventListener("touchstart", function() {changeOffset(90, true);});
+    document.getElementById('prograde').addEventListener("touchend", function() {changeOffset(90, false);});
+    document.getElementById('retrograde').addEventListener("touchstart", function() {changeOffset(88, true);});
+    document.getElementById('retrograde').addEventListener("touchend", function() {changeOffset(88, false);});
     // PIXI variables
     var Container = PIXI.Container,
         autoDetectRenderer = PIXI.autoDetectRenderer,
@@ -81,7 +103,7 @@ $(document).ready(function() {
     renderer.view.style.display = "block";
     renderer.autoResize = true;
     renderer.resize(window.innerWidth, window.innerHeight);
-    renderer.backgroundColor = 0x151515;
+    renderer.backgroundColor = 0x24232f;
     document.body.appendChild(renderer.view);
 
 
@@ -111,13 +133,13 @@ $(document).ready(function() {
         circle.y = renderer.height/2;
         circle.speedx = 0;
         circle.speedy = 0;
-        thingBox.addChild(circle)
+        thingBox.addChild(circle);
 
         second = new Graphics();
         second.beginFill(0x99ff99);
         second.drawCircle(0, 0, shipsize);
         second.endFill();
-        second.x = 600;
+        second.x = renderer.width/2 - 100;
         second.y = renderer.height/2;
         second.speedx = startX;
         second.speedy = startY;
@@ -132,15 +154,16 @@ $(document).ready(function() {
         thingBox.pivot.y = renderer.height/2;
         thingBox.scale.y = thingBox.scale.x = zoom;
 
-        $(".btn1").bind("click", function() {
+        $(".btn1").on("click touchstart", function() {
             trail.clear();
         });
-        setTimeout( logic, 1000 / 60 );
+        setTimeout( logic, simspeed );
 
         render();
     }
 
     function render() {
+        logic()
 
         renderer.render(stage);
 
@@ -168,10 +191,10 @@ $(document).ready(function() {
 
         // trail
         if(counter % 2 === 0) {
-            trail.lineStyle(2, lineColor, 0.2);
+            trail.lineStyle(lineWidth, lineColor, 0.2);
         }
         else {
-            trail.lineStyle(2, lineColor, 0.1);
+            trail.lineStyle(lineWidth, lineColor, 0.1);
         }
 
 
@@ -219,14 +242,24 @@ $(document).ready(function() {
             }
 
             if(grade[0]) {
-                trail.lineStyle(2, proColor, 0.4);
+                trail.lineStyle(lineWidth, proColor, 0.4);
             }
             else if(grade[1]) {
-                trail.lineStyle(2, retroColor, 0.4);
+                trail.lineStyle(lineWidth, retroColor, 0.4);
             }
         }
 
-        $(".display").html("speed: " + speed + "<br> Fuel:" + Math.round(fuel*10));
+        if(changeThrust.decrease && thrust > 0) {
+            thrust -= changeAmount;
+        }
+
+        if(changeThrust.increase) {
+            thrust += changeAmount
+        }
+
+        $(".display").html("speed: " + speed + "<br> Fuel:" + (Math.round(fuel*10)) + "<br> Thrust:" + (Math.round(thrust*1000) / 10));
+
+        $("#fuelamount").css("width", (fuel/startFuel*100) + "%")
 
         // draw trail
         trail.moveTo(second.x,second.y);
@@ -244,7 +277,7 @@ $(document).ready(function() {
 
         // fake drag:
         if (r < 0) {
-            var drag = 1 - (0.005/Math.pow(r + 3, 2) * speed)
+            var drag = 1 - (0.005/Math.pow(r + 3, 2) * speed);
             second.speedx *= drag;
             second.speedy *= drag;
         }
@@ -267,10 +300,17 @@ $(document).ready(function() {
             second.x -= 200;
         }
         counter += 1;
-        setTimeout( logic, simspeed );
+        // setTimeout( logic, simspeed );
 
     }
 
 
 
 });
+
+function removeOverlay() {
+    $("#prograde").html("");
+    $("#prograde").css("background-color", "rgba(0, 0, 0, 0)");
+    $("#retrograde").html("");
+    $("#retrograde").css("background-color", "rgba(0, 0, 0, 0)");
+}
