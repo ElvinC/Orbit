@@ -26,7 +26,7 @@ var planetsize = 30,
     lineColor = 0x66bbff,
     retroColor = 0xff4444,
     proColor = 0x44ff44,
-    startFuel = 90,
+    startFuel = 20,
     lineWidth = 2,
     changeAmount = 0.0005;
 
