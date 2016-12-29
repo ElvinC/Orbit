@@ -1,0 +1,170 @@
+{
+    "1" : {
+        "name" : "Default",
+        "planetSize" : 30,
+        "planetMass" : 50,
+        "satSize" : 9,
+        "satMass" : 5,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 4
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : -0.4
+        },
+        "satStartPos" : {
+            "x" : -100,
+            "y" : 0
+        },
+        "planetStartPos" : {
+            "x" : 0,
+            "y" : 0
+        }
+
+    },
+
+    "2" : {
+        "name" : "Earth - Moon",
+        "planetSize" : 32,
+        "planetMass" : 100,
+        "satSize" : 8.7,
+        "satMass" : 1.23,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 2.6
+        },
+        "satStartPos" : {
+            "x" : -600,
+            "y" : 0
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : 0
+        },
+        "planetStartPos" : {
+            "x" : 0,
+            "y" : 0
+        }
+    },
+
+    "3" : {
+        "name" : "Binary star - same mass",
+        "planetSize" : 15,
+        "planetMass" : 50,
+        "satSize" : 15,
+        "satMass" : 50,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 0.7
+        },
+        "satStartPos" : {
+            "x" : -300,
+            "y" : 0
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : -0.7
+        },
+        "planetStartPos" : {
+            "x" : 300,
+            "y" : 0
+        }
+    },
+
+    "4" : {
+        "name" : "Binary star - different mass",
+        "planetSize" : 20,
+        "planetMass" : 50,
+        "satSize" : 15,
+        "satMass" : 25,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 0.7
+        },
+        "satStartPos" : {
+            "x" : -300,
+            "y" : 0
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : -0.35
+        },
+        "planetStartPos" : {
+            "x" : 300,
+            "y" : 0
+        }
+    },
+
+    "5" : {
+        "name" : "Star orbiting black hole",
+        "planetSize" : 0,
+        "planetMass" : 500,
+        "satSize" : 10,
+        "satMass" : 0,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 5.5
+        },
+        "satStartPos" : {
+            "x" : -200,
+            "y" : 0
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : 0
+        },
+        "planetStartPos" : {
+            "x" : 0,
+            "y" : 0
+        }
+    },
+
+    "6" : {
+        "name" : "Orbiting while moving",
+        "planetSize" : 30,
+        "planetMass" : 50,
+        "satSize" : 9,
+        "satMass" : 5,
+        "gravity" : 0.4,
+        "follow" : true,
+        "Objects" : ["planet", "satellite"],
+        "followObject" : "satellite",
+        "satStartVel" : {
+            "x" : 0,
+            "y" : 8
+        },
+        "satStartPos" : {
+            "x" : -200,
+            "y" : 0
+        },
+        "planetStartVel" : {
+            "x" : 0,
+            "y" : 5
+        },
+        "planetStartPos" : {
+            "x" : 0,
+            "y" : 0
+        }
+    }
+}

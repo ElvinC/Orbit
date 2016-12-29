@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <head>
         <script type="text/javascript" src="js/pixi.min.js"></script>
 		<script src="js/jquery.min.js" charset="utf-8"></script>
+        <link rel="shortcut icon" href="/favicon.png"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<script src="js/orbit.js" charset="utf-8"></script>
@@ -11,19 +11,100 @@
         <title>Elvin's Orbit sim</title>
     </head>
     <body>
-        <div class="speed">
-            <div class="display"></div>
-            <div style="position: fixed; bottom: 60px;">
-              Z: Speed up
-              X: Speed down
-            </div>
+        <div class="display"></div>
+        <div id="help" style="">
+          Z: Speed up
+          X: Speed down (Current direction)<br>
+          WASD: Control <br>
+          Shift: Thrust up, Ctrl: Thrust down <br>
+          F: Object to follow
         </div>
-        <button type="button" name="button" class="btn btn1">clear</button>
-        <div id="prograde">Prograde</div>
-        <div id="retrograde">Retrograde</div>
+        <button type="button" name="button" class="btn" id="clear">clear trails</button>
+        <div id="prograde" class="visible-xs visible-sm overlay">Prograde</div>
+        <div id="retrograde" class="visible-xs visible-sm overlay">Retrograde</div>
+        <div id="fullOverlay" class="overlay"></div>
 
+        <!--
+        fuel display disabled
         <div id="fuelprogress">
             <div id="fuelamount"></div>
+        </div>
+        -->
+
+        <div id="infoButton">
+            <span id="infoIcon" class="glyphicon glyphicon-info-sign"></span>
+        </div>
+        <div id="settingsButton">
+            <span id="settingsIcon" class="glyphicon glyphicon-cog"></span>
+        </div>
+
+        <div id="settings" tabindex="1">
+            <div class="settingsTitle">
+                Settings
+            </div>
+            <div class="form-group innerSettings">
+                <table class="settingsTable">
+                    <tr>
+                        <td class="option" colspan="2">Presets:</td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2">
+                            <select class="form-control settingForm" id="presets">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr><td><br></td></tr>
+                    <tr>
+                        <td class="option">"Blue" Mass<input type="text" name="PlanetMass" value="50" class="form-control settingForm" placeholder="5"></td>
+                        <td class="option">"Green" Mass<input type="text" name="SatelliteMass" value="5" class="form-control settingForm" placeholder="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="option">"Blue" Size<input type="text" name="PlanetSize" value="30" class="form-control settingForm" placeholder="5"></td>
+                        <td class="option">"Green" Size<input type="text" name="SatelliteSize" value="9" class="form-control settingForm" placeholder="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2">(Size is only visual)</td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2">Gravitional constant <input type="text" name="Gravity" value="0.4" class="form-control settingForm" placeholder="1"></td>
+                    </tr>
+                    <td class="option" colspan="2"><button type="button" class="btn btn-primary" name="button" id="updateSettings">Update (keep current location)</button></td>
+
+                    <tr><td><br></td></tr>
+                    <tr>
+                        <td class="option" colspan="2">"Blue" starting position:</td>
+                    </tr>
+                    <tr>
+                        <td class="option">X<input type="text" name="PlanetStartX" value="0" class="form-control settingForm" placeholder="0"></td>
+                        <td class="option">Y<input type="text" name="PlanetStartY" value="0" class="form-control settingForm" placeholder="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2">"Blue" starting velocity:</td>
+                    </tr>
+                    <tr>
+                        <td class="option">X<input type="text" name="PlanetStartXVel" value="0" class="form-control settingForm" placeholder="0"></td>
+                        <td class="option">Y<input type="text" name="PlanetStartYVel" value="-0.4" class="form-control settingForm" placeholder="0"></td>
+                    </tr>
+                    <tr><td><br></td></tr>
+                    <tr>
+                        <td class="option" colspan="2">"Green" starting position:</td>
+                    </tr>
+                    <tr>
+                        <td class="option">X<input type="text" name="SatStartX" value="-100" class="form-control settingForm" placeholder="0"></td>
+                        <td class="option">Y<input type="text" name="SatStartY" value="0" class="form-control settingForm" placeholder="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2">"Green" starting velocity:</td>
+                    </tr>
+                    <tr>
+                        <td class="option">X<input type="text" name="SatStartXVel" value="0" class="form-control settingForm" placeholder="0"></td>
+                        <td class="option">Y<input type="text" name="SatStartYVel" value="4" class="form-control settingForm" placeholder="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="option" colspan="2"><button type="button" class="btn btn-primary" name="button" id="changeSettings">Update and restart</button></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>
