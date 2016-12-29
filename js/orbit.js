@@ -517,7 +517,7 @@ function logic() {
         settings.thrust += settings.changeAmount;
     }
 
-    $(".display").html("speed: " + speed + "<br>relative speed: " + relSpeed + "<br> Thrust: " + (Math.round(settings.thrust * 1000) / 10) + " unit/s<sup>2</sup><br>Distance: " + Math.round(r));
+    $(".display").html("Speed: " + speed + "<br>Relative speed: " + relSpeed + "<br> Thrust: " + (Math.round(settings.thrust * 1000) / 10) + " unit/s<sup>2</sup><br>Distance: " + Math.round(r));
 
     // $("#fuelamount").css("width", (fuel / settings.startFuel * 100) + "%"); fuel disabled
 
